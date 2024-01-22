@@ -231,11 +231,11 @@ class NeuralNet(nn.Module):
         # Define your neural network here
         # TODO: How to modify this model to achieve better performance?
         self.net = nn.Sequential(
-            nn.Linear(input_dim, 64),
+            nn.Linear(input_dim, 32),
             nn.ReLU(),
-            nn.Linear(64, 32),
+            nn.Linear(32, 16),
             nn.ReLU(),
-            nn.Linear(32, 1)
+            nn.Linear(16, 1)
         )
 
         # Mean squared error loss
@@ -361,7 +361,7 @@ config = {
         # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
-    'early_stop': 600,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 500,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
