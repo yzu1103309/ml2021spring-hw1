@@ -173,9 +173,9 @@ class COVID19Dataset(Dataset):
             self.target = torch.FloatTensor(target[indices])
 
         # Normalize features (you may remove this part to see what will happen)
-        self.data[:, 40:] = \
-            (self.data[:, 40:] - self.data[:, 40:].mean(dim=0, keepdim=True)) \
-            / self.data[:, 40:].std(dim=0, keepdim=True)
+        # self.data[:, 40:] = \
+        #     (self.data[:, 40:] - self.data[:, 40:].mean(dim=0, keepdim=True)) \
+        #     / self.data[:, 40:].std(dim=0, keepdim=True)
 
         self.dim = self.data.shape[1]
 
@@ -232,11 +232,10 @@ class NeuralNet(nn.Module):
         # TODO: How to modify this model to achieve better performance?
         self.net = nn.Sequential(
             nn.Linear(input_dim, 64),
+            nn.ReLU(),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Linear(32, 16),
-            nn.ReLU(),
-            nn.Linear(16, 1)
+            nn.Linear(32, 1)
         )
 
         # Mean squared error loss
@@ -355,20 +354,21 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 config = {
     'n_epochs': 20000,  # maximum number of epochs
     'batch_size': 500,  # mini-batch size for dataloader
-    'optimizer': 'SGD',  # optimization algorithm (optimizer in torch.optim)
+    'tt_batch_size': 1000,
+    'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
-        'momentum': 0.9,  # momentum for SGD
+        # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
-    'early_stop': 500,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 1000,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
 """# **Load data and model**"""
 
 tr_set = prep_dataloader(tr_path, 'train', config['batch_size'], target_only=target_only)
-dv_set = prep_dataloader(tr_path, 'dev', config['batch_size'], target_only=target_only)
+dv_set = prep_dataloader(tr_path, 'dev', config['tt_batch_size'], target_only=target_only)
 tt_set = prep_dataloader(tt_path, 'test', config['batch_size'], target_only=target_only)
 
 model = NeuralNet(tr_set.dataset.dim).to(device)  # Construct model and move to device
