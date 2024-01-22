@@ -232,10 +232,10 @@ class NeuralNet(nn.Module):
         # TODO: How to modify this model to achieve better performance?
         self.net = nn.Sequential(
             nn.Linear(input_dim, 64),
-            nn.ReLU(),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Linear(32, 1)
+            nn.Linear(32, 16),
+            nn.Linear(16, 1)
         )
 
         # Mean squared error loss
@@ -353,11 +353,11 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
     'n_epochs': 20000,  # maximum number of epochs
-    'batch_size': 500,  # mini-batch size for dataloader
-    'tt_batch_size': 1000,
+    'batch_size': 300,  # mini-batch size for dataloader
+    'tt_batch_size': 600,
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
-        'lr': 0.001,  # learning rate of SGD
+        'lr': 0.003,  # learning rate of SGD
         # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
