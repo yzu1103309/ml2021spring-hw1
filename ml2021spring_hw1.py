@@ -48,7 +48,7 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
-myseed = 3309  # set a random seed for reproducibility
+myseed = 12345  # set a random seed for reproducibility
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 np.random.seed(myseed)
@@ -232,10 +232,10 @@ class NeuralNet(nn.Module):
         # TODO: How to modify this model to achieve better performance?
         self.net = nn.Sequential(
             nn.Linear(input_dim, 64),
+            nn.ReLU(),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Linear(32, 16),
-            nn.Linear(16, 1)
+            nn.Linear(32, 1)
         )
 
         # Mean squared error loss
@@ -353,15 +353,15 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
     'n_epochs': 20000,  # maximum number of epochs
-    'batch_size': 300,  # mini-batch size for dataloader
-    'tt_batch_size': 600,
+    'batch_size': 270,  # mini-batch size for dataloader
+    'tt_batch_size': 540,
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
-        'lr': 0.003,  # learning rate of SGD
+        'lr': 0.001,  # learning rate of SGD
         # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
-    'early_stop': 1000,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 600,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
