@@ -48,7 +48,7 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
-myseed = 42069  # set a random seed for reproducibility
+myseed = 3309  # set a random seed for reproducibility
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 np.random.seed(myseed)
@@ -148,7 +148,7 @@ class COVID19Dataset(Dataset):
             feats = list(range(93))
         else:
             # TODO: Using 40 states & 2 tested_positive features (indices = 57 & 75)
-            feats = list(range(40)) + list(range(40,44)) + list(range(58,62)) + list(range(76,80)) + [57, 75, 68, 69, 55, 73, 91]
+            feats = list(range(40)) + list(range(40,44)) + list(range(58,62)) + list(range(76,80)) + [57, 75]
             pass
 
         if mode == 'test':
@@ -233,7 +233,9 @@ class NeuralNet(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(input_dim, 64),
             nn.Linear(64, 32),
+            nn.ReLU(),
             nn.Linear(32, 16),
+            nn.ReLU(),
             nn.Linear(16, 1)
         )
 
@@ -251,7 +253,7 @@ class NeuralNet(nn.Module):
         for param in model.parameters():
             reg_loss += torch.sum(torch.abs(param))
 
-        factor = 0.005  #lambda
+        factor = 0.01  #lambda
         return self.criterion(pred, target) + factor * reg_loss
 
 
@@ -351,15 +353,15 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
-    'n_epochs': 10000,  # maximum number of epochs
-    'batch_size': 270,  # mini-batch size for dataloader
-    'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
+    'n_epochs': 20000,  # maximum number of epochs
+    'batch_size': 500,  # mini-batch size for dataloader
+    'optimizer': 'SGD',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
-        # 'momentum': 0.9,  # momentum for SGD
-        # 'weight_decay': 0.01
+        'momentum': 0.9,  # momentum for SGD
+        # 'weight_decay': 0.4
     },
-    'early_stop': 1000,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 500,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
