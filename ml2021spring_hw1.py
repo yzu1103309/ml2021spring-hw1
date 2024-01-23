@@ -48,7 +48,8 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
-myseed = 12345  # set a random seed for reproducibility
+myseed = 12345
+# set a random seed for reproducibility
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 np.random.seed(myseed)
@@ -251,7 +252,7 @@ class NeuralNet(nn.Module):
         reg_loss = 0
         for param in model.parameters():
             reg_loss += torch.sum(torch.abs(param))
-
+        # print(reg_loss)
         factor = 0.01  #lambda
         return self.criterion(pred, target) + factor * reg_loss
 
@@ -352,9 +353,9 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
-    'n_epochs': 20000,  # maximum number of epochs
-    'batch_size': 270,  # mini-batch size for dataloader
-    'tt_batch_size': 540,
+    'n_epochs': 30000,  # maximum number of epochs
+    'batch_size': 200,  # mini-batch size for dataloader
+    'tt_batch_size': 400,
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
