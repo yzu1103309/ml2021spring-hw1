@@ -354,7 +354,7 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
     'n_epochs': 30000,  # maximum number of epochs
-    'batch_size': 200,  # mini-batch size for dataloader
+    'batch_size': 270,  # mini-batch size for dataloader
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
