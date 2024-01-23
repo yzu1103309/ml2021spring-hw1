@@ -165,9 +165,9 @@ class COVID19Dataset(Dataset):
 
             # Splitting training data into train & dev sets
             if mode == 'train':
-                indices = [i for i in range(len(data)) if i % 10 != 0]
+                indices = [i for i in range(len(data)) if i % 8 != 0]
             elif mode == 'dev':
-                indices = [i for i in range(len(data)) if i % 10 == 0]
+                indices = [i for i in range(len(data)) if i % 8 == 0]
 
             # Convert data into PyTorch tensors
             self.data = torch.FloatTensor(data[indices])
@@ -355,14 +355,14 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 config = {
     'n_epochs': 30000,  # maximum number of epochs
     'batch_size': 200,  # mini-batch size for dataloader
-    'tt_batch_size': 400,
+    'tt_batch_size': 200,
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
         # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
-    'early_stop': 1000,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 300,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
