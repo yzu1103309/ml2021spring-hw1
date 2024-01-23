@@ -355,7 +355,6 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 config = {
     'n_epochs': 30000,  # maximum number of epochs
     'batch_size': 200,  # mini-batch size for dataloader
-    'tt_batch_size': 200,
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
@@ -369,7 +368,7 @@ config = {
 """# **Load data and model**"""
 
 tr_set = prep_dataloader(tr_path, 'train', config['batch_size'], target_only=target_only)
-dv_set = prep_dataloader(tr_path, 'dev', config['tt_batch_size'], target_only=target_only)
+dv_set = prep_dataloader(tr_path, 'dev', config['batch_size'], target_only=target_only)
 tt_set = prep_dataloader(tt_path, 'test', config['batch_size'], target_only=target_only)
 
 model = NeuralNet(tr_set.dataset.dim).to(device)  # Construct model and move to device
