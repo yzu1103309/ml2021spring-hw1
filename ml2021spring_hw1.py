@@ -354,14 +354,14 @@ target_only = True  # TODO: Using 40 states & 2 tested_positive features
 # TODO: How to tune these hyper-parameters to improve your model's performance?
 config = {
     'n_epochs': 30000,  # maximum number of epochs
-    'batch_size': 540,  # mini-batch size for dataloader
+    'batch_size': 270,  # mini-batch size for dataloader
     'optimizer': 'Adam',  # optimization algorithm (optimizer in torch.optim)
     'optim_hparas': {  # hyper-parameters for the optimizer (depends on which optimizer you are using)
         'lr': 0.001,  # learning rate of SGD
         # 'momentum': 0.9,  # momentum for SGD
         # 'weight_decay': 0.4
     },
-    'early_stop': 300,  # early stopping epochs (the number epochs since your model's last improvement)
+    'early_stop': 1000,  # early stopping epochs (the number epochs since your model's last improvement)
     'save_path': 'models/model.pth'  # your model will be saved here
 }
 
