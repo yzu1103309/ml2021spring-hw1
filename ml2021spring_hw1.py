@@ -232,11 +232,11 @@ class NeuralNet(nn.Module):
         # Define your neural network here
         # TODO: How to modify this model to achieve better performance?
         self.net = nn.Sequential(
-            nn.Linear(input_dim, 32),
+            nn.Linear(input_dim, 16),
+            nn.Linear(16, 32),
             nn.ReLU(),
-            nn.Linear(32, 64),
-            nn.ReLU(),
-            nn.Linear(64, 1)
+            nn.Linear(32, 16),
+            nn.Linear(16, 1)
         )
 
         # Mean squared error loss
